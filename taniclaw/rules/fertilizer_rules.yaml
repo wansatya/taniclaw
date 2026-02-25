@@ -1,0 +1,40 @@
+version: 1
+description: "Expanded fertilizer rules per plant type and stage"
+
+rules:
+  # Spinach/Lettuce — nitrogen focused
+  - id: fertilize_leafy_vegetative
+    name: "Nitrogen fertilizer for leafy greens"
+    priority: 21
+    conditions:
+      - field: plant_type
+        operator: in
+        value: ["spinach", "lettuce"]
+      - field: plant_state
+        operator: eq
+        value: vegetative
+      - field: days_since_last_fertilize
+        operator: gte
+        value: 10
+    action:
+      type: fertilize
+      description: "Berikan pupuk nitrogen tinggi (Urea atau NPK 20-10-10) untuk tanaman daun yang sedang tumbuh aktif."
+      amount_grams: 3
+      fertilizer_type: "NPK 20-10-10"
+
+  # Hydroponic nutrient change
+  - id: hydroponic_nutrient_refresh
+    name: "Refresh hydroponic nutrient solution"
+    priority: 21
+    conditions:
+      - field: plant_type
+        operator: eq
+        value: hydroponic
+      - field: days_since_last_fertilize
+        operator: gte
+        value: 7
+    action:
+      type: fertilize
+      description: "Ganti larutan nutrisi hidroponik. Buat larutan baru dengan EC 1.5-2.0 dan pH 5.8-6.2."
+      amount_grams: 5
+      fertilizer_type: "Nutrisi Hidroponik A+B"

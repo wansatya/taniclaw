@@ -1,0 +1,14 @@
+.venv
+.env
+plan_v1.md
+specs_v1.md
+specs.md
+plan.md
+taniclaw.egg-info
+*/__pycache__/
+taniclaw/build
+taniclaw/taniclaw.egg-info
+taniclaw/__pycache__
+taniclaw.db
+taniclaw.log
+taniclaw.pid

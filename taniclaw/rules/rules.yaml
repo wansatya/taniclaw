@@ -1,0 +1,222 @@
+version: 1
+description: "TaniClaw v1 core rules — primary decision rules"
+
+rules:
+  # === CRITICAL PRIORITY (100) — Weather Alerts ===
+  - id: heatwave_alert
+    name: "Heatwave alert"
+    priority: 100
+    conditions:
+      - field: temp_max
+        operator: gte
+        value: 38
+    action:
+      type: alert
+      description: "Peringatan gelombang panas! Pindahkan tanaman ke tempat teduh dan siram dua kali hari ini pagi dan sore."
+
+  - id: heavy_rain_alert
+    name: "Heavy rain alert"
+    priority: 100
+    conditions:
+      - field: today_rainfall_mm
+        operator: gte
+        value: 50
+    action:
+      type: alert
+      description: "Peringatan hujan lebat! Pastikan drainase baik dan tutup bibit muda. Lewati penyiraman hari ini."
+
+  - id: skip_watering_rain
+    name: "Skip watering if significant rain"
+    priority: 100
+    conditions:
+      - field: today_rainfall_mm
+        operator: gte
+        value: 10
+    action:
+      type: skip_water
+      description: "Lewati penyiraman hari ini — sudah cukup hujan (≥10mm diprediksi)."
+
+  # === WATERING RULES (Priority 10-20) ===
+  - id: watering_new_seed
+    name: "Water new seeds daily"
+    priority: 15
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: seed
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+      - field: today_rainfall_mm
+        operator: lt
+        value: 10
+    action:
+      type: water
+      description: "Siram bibit baru dengan lembut — jaga tanah tetap lembab untuk perkecambahan."
+      amount_ml: 100
+
+  - id: watering_germination
+    name: "Water germinating plants"
+    priority: 15
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: germination
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+      - field: today_rainfall_mm
+        operator: lt
+        value: 10
+    action:
+      type: water
+      description: "Siram tanaman yang baru berkecambah secara perlahan dengan semprotan. Jaga kelembaban tanah."
+      amount_ml: 150
+
+  - id: watering_vegetative
+    name: "Water vegetative plants"
+    priority: 10
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: vegetative
+      - field: days_since_last_water
+        operator: gte
+        value: 2
+      - field: today_rainfall_mm
+        operator: lt
+        value: 10
+    action:
+      type: water
+      description: "Siram tanaman secara menyeluruh di pagi hari. Sirami di pangkal tanaman, bukan daun."
+      amount_ml: 300
+
+  - id: watering_flowering
+    name: "Water flowering plants consistently"
+    priority: 12
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: flowering
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+      - field: today_rainfall_mm
+        operator: lt
+        value: 10
+    action:
+      type: water
+      description: "Siram tanaman berbunga secara konsisten. Kekeringan saat berbunga dapat menyebabkan gugur bunga."
+      amount_ml: 300
+
+  - id: watering_harvest
+    name: "Water fruiting/harvest plants"
+    priority: 10
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_since_last_water
+        operator: gte
+        value: 2
+      - field: today_rainfall_mm
+        operator: lt
+        value: 10
+    action:
+      type: water
+      description: "Siram tanaman yang sedang berbuah. Pertahankan kelembaban konsisten untuk kualitas buah optimal."
+      amount_ml: 250
+
+  - id: watering_hot_day
+    name: "Extra water on hot days"
+    priority: 20
+    conditions:
+      - field: temp_max
+        operator: gte
+        value: 35
+      - field: today_rainfall_mm
+        operator: lt
+        value: 5
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+    action:
+      type: water
+      description: "Hari panas terdeteksi (≥35°C). Siram ekstra di sore hari untuk mencegah stres panas."
+      amount_ml: 300
+
+  # === FERTILIZER RULES (Priority 20) ===
+  - id: fertilize_vegetative
+    name: "Fertilize during vegetative stage"
+    priority: 20
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: vegetative
+      - field: days_since_last_fertilize
+        operator: gte
+        value: 14
+    action:
+      type: fertilize
+      description: "Berikan pupuk NPK 16-16-16 hari ini untuk mendukung pertumbuhan daun dan batang."
+      amount_grams: 5
+      fertilizer_type: "NPK 16-16-16"
+
+  - id: fertilize_flowering
+    name: "Fertilize during flowering"
+    priority: 20
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: flowering
+      - field: days_since_last_fertilize
+        operator: gte
+        value: 14
+    action:
+      type: fertilize
+      description: "Berikan pupuk NPK 10-30-20 untuk mendukung pembungaan dan pembentukan buah. Fosfat tinggi diperlukan."
+      amount_grams: 5
+      fertilizer_type: "NPK 10-30-20"
+
+  - id: fertilize_harvest
+    name: "Light fertilize during harvest"
+    priority: 20
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_since_last_fertilize
+        operator: gte
+        value: 21
+    action:
+      type: fertilize
+      description: "Berikan pupuk ringan untuk memperpanjang produksi buah."
+      amount_grams: 3
+      fertilizer_type: "NPK 10-30-20"
+
+  # === HARVEST NOTIFICATION (Priority 5) ===
+  - id: harvest_ready_notify
+    name: "Notify harvest ready"
+    priority: 5
+    conditions:
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_in_state
+        operator: gte
+        value: 7
+    action:
+      type: notify
+      description: "Tanaman Anda sedang dalam tahap panen! Periksa kematangan buah dan panen secara teratur untuk merangsang produksi lebih lanjut."
+
+  # === STAGE INSTRUCTIONS (Priority 1) ===
+  - id: daily_instructions
+    name: "Provide daily stage instructions"
+    priority: 1
+    conditions:
+      - field: days_since_planting
+        operator: gte
+        value: 0
+    action:
+      type: log
+      description: "Jalankan siklus agen harian untuk mengumpulkan instruksi berbasis tahap."

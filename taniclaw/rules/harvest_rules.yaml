@@ -1,0 +1,71 @@
+version: 1
+description: "Harvest detection and notification rules"
+
+rules:
+  - id: harvest_chili_ready
+    name: "Chili harvest reminder"
+    priority: 6
+    conditions:
+      - field: plant_type
+        operator: eq
+        value: chili
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_in_state
+        operator: gte
+        value: 5
+    action:
+      type: notify
+      description: "Cabai Anda siap panen! Periksa warna buah — panen saat sudah merah/berwarna. Panen rutin setiap 2-3 hari untuk merangsang produksi lebih."
+
+  - id: harvest_tomato_ready
+    name: "Tomato harvest reminder"
+    priority: 6
+    conditions:
+      - field: plant_type
+        operator: eq
+        value: tomato
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_in_state
+        operator: gte
+        value: 5
+    action:
+      type: notify
+      description: "Tomat Anda siap panen! Periksa warna buah — panen saat sudah berwarna penuh dan terasa sedikit lunak saat ditekan lembut."
+
+  - id: harvest_leafy_reminder
+    name: "Leafy green harvest reminder"
+    priority: 6
+    conditions:
+      - field: plant_type
+        operator: in
+        value: ["spinach", "lettuce"]
+      - field: plant_state
+        operator: eq
+        value: harvest
+      - field: days_in_state
+        operator: gte
+        value: 3
+    action:
+      type: notify
+      description: "Sayuran daun Anda siap dipanen! Petik daun luar terlebih dahulu untuk memungkinkan pertumbuhan terus-menerus dari tengah."
+
+  - id: bolting_warning
+    name: "Warn about bolting risk"
+    priority: 25
+    conditions:
+      - field: plant_type
+        operator: in
+        value: ["spinach", "lettuce"]
+      - field: temp_max
+        operator: gte
+        value: 30
+      - field: plant_state
+        operator: in
+        value: ["vegetative", "harvest"]
+    action:
+      type: alert
+      description: "Peringatan: Suhu tinggi (≥30°C) dapat menyebabkan bayam/selada berbunga (bolting). Segera panen sebelum berbunga, atau berikan naungan."

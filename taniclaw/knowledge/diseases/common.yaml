@@ -1,0 +1,31 @@
+diseases:
+  cross_plant_diseases:
+    - name: "Damping Off"
+      affects: ["all seedlings"]
+      symptoms: ["seedlings collapse at soil level", "thin water-soaked stem at base"]
+      prevention: ["use sterile seed-starting mix", "avoid overwatering", "ensure good air circulation"]
+      treatment: ["remove affected seedlings", "reduce watering", "apply cinnamon powder to soil surface"]
+
+    - name: "Whitefly Infestation"
+      affects: ["chili", "tomato", "lettuce"]
+      symptoms: ["tiny white flies on underside of leaves", "yellowing leaves", "honeydew and sooty mold"]
+      prevention: ["use yellow sticky traps", "reflective mulch", "neem oil spray weekly"]
+      treatment: ["remove heavily infested leaves", "spray insecticidal soap", "introduce natural predators"]
+
+    - name: "Aphid Colony"
+      affects: ["chili", "tomato", "spinach", "lettuce"]
+      symptoms: ["clusters of small insects on new growth", "curled leaves", "sticky residue"]
+      prevention: ["regular inspection", "companion planting with aromatic herbs"]
+      treatment: ["strong water spray", "neem oil", "insecticidal soap spray"]
+
+    - name: "Root Knot Nematodes"
+      affects: ["tomato", "chili"]
+      symptoms: ["stunted growth", "yellowing", "visible galls on roots"]
+      prevention: ["crop rotation", "marigold companion planting", "soil solarization"]
+      treatment: ["remove affected plants", "soil treatment with beneficial nematodes"]
+
+    - name: "Powdery Mildew"
+      affects: ["chili", "tomato", "lettuce"]
+      symptoms: ["white powdery coating on leaves", "leaf curling and distortion"]
+      prevention: ["avoid overhead watering", "ensure good air circulation", "avoid high humidity at night"]
+      treatment: ["baking soda spray (1 tsp per liter)", "potassium bicarbonate", "sulfur fungicide"]

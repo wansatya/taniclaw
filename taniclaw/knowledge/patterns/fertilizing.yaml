@@ -1,0 +1,35 @@
+fertilizing_patterns:
+  general_principles:
+    - "Always water before fertilizing to prevent root burn"
+    - "Follow the rule: less is more — under-fertilization is safer than over-fertilization"
+    - "Organic fertilizers release slowly and are safer for beginners"
+    - "Chemical fertilizers work faster but require precise measurement"
+    - "Signs of over-fertilization: yellow leaf tips/edges, crusty white deposits on soil"
+
+  npk_guide:
+    nitrogen: "N — promotes leaf and stem growth. High in vegetative stage"
+    phosphorus: "P — promotes root, flower, and fruit development"
+    potassium: "K — promotes overall plant health, disease resistance, fruit quality"
+    interpretation:
+      "16-16-16": "Balanced all-purpose for general growth"
+      "10-30-20": "High phosphorus — for flowering and fruiting"
+      "20-10-10": "High nitrogen — for leafy vegetables"
+
+  organic_alternatives:
+    compost: "Rich in micronutrients, slow-release, improves soil structure"
+    worm_castings: "Excellent all-purpose, gentle — cannot burn roots"
+    fish_emulsion: "High nitrogen, fast-acting, good for vegetative stage"
+    banana_peel_tea: "High potassium, good for fruiting"
+    coconut_water: "Contains cytokinins, promotes root growth"
+    wood_ash: "High potassium and calcium, raises soil pH"
+
+  application_methods:
+    soil_drench: "Dissolve in water and apply at base — best absorption"
+    foliar_spray: "Diluted solution on leaves — fast uptake but temporary"
+    dry_granule: "Sprinkle around drip line, water in — slow release"
+    side_dressing: "Apply along row, mix into top soil"
+
+  safety_limits:
+    max_frequency_days: 7
+    max_amount_grams_per_plant: 20
+    safe_concentration_percent: 0.5

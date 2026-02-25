@@ -1,0 +1,102 @@
+plant_type: chili
+display_name: Cabai / Chili Pepper
+family: Solanaceae
+
+lifecycle:
+  stages:
+    - name: seed
+      duration_days: [7, 14]
+      description: "Seeds planted, waiting for germination"
+      instructions:
+        - "Keep soil moist but not waterlogged"
+        - "Maintain temperature 25-30°C"
+        - "Cover with plastic wrap to retain moisture"
+        - "Place in warm location away from direct wind"
+    - name: germination
+      duration_days: [7, 14]
+      description: "Sprouts emerging from soil"
+      instructions:
+        - "Remove plastic cover once sprouts appear"
+        - "Provide indirect sunlight (4-6 hours)"
+        - "Water gently once daily in the morning"
+        - "Keep temperature between 22-28°C"
+    - name: vegetative
+      duration_days: [30, 45]
+      description: "Leaves and stems growing actively"
+      instructions:
+        - "Full sunlight 6-8 hours per day"
+        - "Water every 1-2 days depending on weather"
+        - "Fertilize with NPK 16-16-16 every 14 days"
+        - "Prune lower leaves for better air circulation"
+        - "Check for pests weekly"
+    - name: flowering
+      duration_days: [14, 21]
+      description: "Flowers appearing, fruit setting"
+      instructions:
+        - "Reduce nitrogen fertilizer"
+        - "Switch to phosphorus-high fertilizer (NPK 10-30-20)"
+        - "Water consistently — avoid drought stress"
+        - "Gently shake plants to help pollination"
+        - "Remove damaged flowers promptly"
+    - name: harvest
+      duration_days: [30, 60]
+      description: "Fruits ready for harvest"
+      instructions:
+        - "Harvest when color changes from green to red/orange/yellow"
+        - "Pick regularly every 2-3 days to encourage more fruiting"
+        - "Use scissors to avoid damaging the plant"
+        - "Continue regular watering and light fertilizing"
+
+watering:
+  default_frequency_days: 1
+  adjust_by_stage:
+    seed: { frequency_days: 1, amount_ml: 100 }
+    germination: { frequency_days: 1, amount_ml: 150 }
+    vegetative: { frequency_days: 2, amount_ml: 300 }
+    flowering: { frequency_days: 1, amount_ml: 300 }
+    harvest: { frequency_days: 2, amount_ml: 250 }
+  weather_adjustments:
+    rain_mm_threshold: 10
+    rain_action: "skip watering"
+    high_temp_threshold: 35
+    high_temp_action: "water twice daily"
+    low_humidity_threshold: 40
+    low_humidity_action: "increase amount by 50%"
+
+fertilizer:
+  schedule:
+    - stage: vegetative
+      type: "NPK 16-16-16"
+      frequency_days: 14
+      amount_grams: 5
+    - stage: flowering
+      type: "NPK 10-30-20"
+      frequency_days: 14
+      amount_grams: 5
+    - stage: harvest
+      type: "NPK 10-30-20"
+      frequency_days: 21
+      amount_grams: 3
+
+diseases:
+  common:
+    - name: "Leaf curl virus"
+      symptoms: ["curling leaves", "stunted growth", "yellowing"]
+      prevention: ["control whitefly population", "remove infected plants immediately", "use reflective mulch"]
+    - name: "Anthracnose"
+      symptoms: ["dark spots on fruit", "fruit rot", "sunken lesions"]
+      prevention: ["avoid overhead watering", "ensure good air circulation", "apply copper fungicide"]
+    - name: "Fusarium wilt"
+      symptoms: ["yellowing lower leaves", "wilting despite watering", "stem discoloration"]
+      prevention: ["use disease-resistant varieties", "avoid waterlogging", "rotate crops"]
+    - name: "Spider mites"
+      symptoms: ["small yellow dots on leaves", "fine webbing", "leaf drop"]
+      prevention: ["increase humidity", "regular inspection", "neem oil spray"]
+
+harvest:
+  indicators:
+    - "Fruit color changes from green to red (or variety-specific color)"
+    - "Fruit is firm when gently squeezed"
+    - "Fruit detaches easily from stem"
+  days_after_flowering: [60, 90]
+  notes: "Pick regularly to stimulate continued production. Chili plants can produce for 2-3 years."

@@ -1,0 +1,85 @@
+plant_type: lettuce
+display_name: Selada / Lettuce
+family: Asteraceae
+
+lifecycle:
+  stages:
+    - name: seed
+      duration_days: [2, 5]
+      description: "Seeds planted, very fast germination"
+      instructions:
+        - "Plant seeds 3-5 mm deep"
+        - "Keep soil lightly moist — do not overwater"
+        - "Ideal temperature: 15-20°C"
+        - "Provide light shade in hot weather"
+    - name: germination
+      duration_days: [3, 7]
+      description: "Seedlings emerging, delicate first leaves"
+      instructions:
+        - "Water lightly with spray bottle"
+        - "Ensure good drainage to prevent damping off"
+        - "Thin seedlings to 15-20 cm apart"
+        - "Provide 6 hours of light"
+    - name: vegetative
+      duration_days: [21, 35]
+      description: "Head forming, leaves expanding"
+      instructions:
+        - "Water consistently — lettuce is 95% water"
+        - "Apply nitrogen-rich fertilizer every 10 days"
+        - "Mulch to keep soil cool and moist"
+        - "Harvest outer leaves regularly"
+        - "Protect from strong afternoon sun (above 28°C)"
+    - name: harvest
+      duration_days: [7, 21]
+      description: "Ready for harvest continuously"
+      instructions:
+        - "Harvest outer leaves for cut-and-come-again method"
+        - "Harvest entire head for heading varieties"
+        - "Harvest early morning for maximum crispness"
+        - "Avoid harvesting in afternoon heat"
+
+watering:
+  default_frequency_days: 1
+  adjust_by_stage:
+    seed: { frequency_days: 1, amount_ml: 80 }
+    germination: { frequency_days: 1, amount_ml: 100 }
+    vegetative: { frequency_days: 1, amount_ml: 250 }
+    harvest: { frequency_days: 1, amount_ml: 200 }
+  weather_adjustments:
+    rain_mm_threshold: 5
+    rain_action: "skip watering"
+    high_temp_threshold: 28
+    high_temp_action: "water twice daily and provide shade cloth"
+    low_humidity_threshold: 50
+    low_humidity_action: "mulch heavily and mist leaves"
+
+fertilizer:
+  schedule:
+    - stage: vegetative
+      type: "NPK 20-10-10 (nitrogen focus)"
+      frequency_days: 10
+      amount_grams: 3
+    - stage: harvest
+      type: "NPK 15-5-5"
+      frequency_days: 14
+      amount_grams: 2
+
+diseases:
+  common:
+    - name: "Tip Burn"
+      symptoms: ["brown crispy edges on inner leaves", "dead tissue at leaf tips"]
+      prevention: ["consistent watering", "ensure calcium availability", "improve air circulation"]
+    - name: "Bottom Rot"
+      symptoms: ["soft brown decay at base", "foul smell"]
+      prevention: ["avoid waterlogging", "improve drainage", "reduce fertilizer"]
+    - name: "Slugs and Snails"
+      symptoms: ["large irregular holes in leaves", "slime trails"]
+      prevention: ["use copper tape barriers", "beer traps", "diatomaceous earth around plants"]
+
+harvest:
+  indicators:
+    - "Head is firm and compact (for heading varieties)"
+    - "Outer leaves are large and deep green"
+    - "Harvest before bolting (flower stalk formation)"
+  days_after_flowering: [0, 7]
+  notes: "Lettuce bolts quickly in heat. Grow in partial shade during hot months. Ideal for hydroponic systems."

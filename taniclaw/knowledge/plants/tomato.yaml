@@ -1,0 +1,102 @@
+plant_type: tomato
+display_name: Tomat / Tomato
+family: Solanaceae
+
+lifecycle:
+  stages:
+    - name: seed
+      duration_days: [5, 10]
+      description: "Seeds planted, waiting for germination"
+      instructions:
+        - "Plant seeds 0.5-1 cm deep in seed tray"
+        - "Keep soil consistently moist"
+        - "Ideal temperature: 20-25°C"
+        - "Cover with plastic bag to maintain humidity"
+    - name: germination
+      duration_days: [7, 14]
+      description: "Seedlings emerging, first true leaves forming"
+      instructions:
+        - "Remove plastic cover"
+        - "Provide bright indirect sunlight"
+        - "Thin seedlings — keep strongest one per cell"
+        - "Water gently using spray bottle"
+    - name: vegetative
+      duration_days: [21, 35]
+      description: "Strong root system and foliage developing"
+      instructions:
+        - "Transplant to larger pot or garden when 15-20 cm tall"
+        - "Full sun 6-8 hours daily"
+        - "Install support stake early"
+        - "Water deeply 3-4 times per week"
+        - "Pinch off suckers for indeterminate varieties"
+        - "Apply balanced fertilizer every 2 weeks"
+    - name: flowering
+      duration_days: [14, 21]
+      description: "Yellow flowers appearing, fruit setting"
+      instructions:
+        - "Switch to low-nitrogen, high-phosphorus fertilizer"
+        - "Maintain consistent watering — irregular watering causes blossom drop"
+        - "Gently vibrate flowers to aid pollination"
+        - "Avoid watering leaves directly"
+    - name: harvest
+      duration_days: [20, 45]
+      description: "Fruits ripening and ready for harvest"
+      instructions:
+        - "Harvest when fully colored (red, orange, or yellow depending on variety)"
+        - "Pick regularly every 2-3 days"
+        - "Remove any diseased fruits immediately"
+        - "Reduce watering slightly to concentrate flavor"
+
+watering:
+  default_frequency_days: 2
+  adjust_by_stage:
+    seed: { frequency_days: 1, amount_ml: 80 }
+    germination: { frequency_days: 1, amount_ml: 100 }
+    vegetative: { frequency_days: 2, amount_ml: 400 }
+    flowering: { frequency_days: 1, amount_ml: 450 }
+    harvest: { frequency_days: 2, amount_ml: 350 }
+  weather_adjustments:
+    rain_mm_threshold: 10
+    rain_action: "skip watering"
+    high_temp_threshold: 35
+    high_temp_action: "water twice daily"
+    low_humidity_threshold: 40
+    low_humidity_action: "increase amount by 30%"
+
+fertilizer:
+  schedule:
+    - stage: vegetative
+      type: "NPK 15-15-15"
+      frequency_days: 14
+      amount_grams: 8
+    - stage: flowering
+      type: "NPK 5-30-20"
+      frequency_days: 14
+      amount_grams: 8
+    - stage: harvest
+      type: "NPK 5-20-30"
+      frequency_days: 21
+      amount_grams: 5
+
+diseases:
+  common:
+    - name: "Early Blight"
+      symptoms: ["brown spots with yellow rings on leaves", "leaf yellowing from bottom"]
+      prevention: ["avoid overhead watering", "remove affected leaves", "mulch soil"]
+    - name: "Late Blight"
+      symptoms: ["dark water-soaked spots on leaves and fruit", "white mold on underside"]
+      prevention: ["apply copper fungicide preventively", "ensure good air circulation"]
+    - name: "Blossom End Rot"
+      symptoms: ["dark sunken spot at blossom end of fruit"]
+      prevention: ["consistent watering", "add calcium to soil", "avoid over-fertilizing with nitrogen"]
+    - name: "Tomato Horn Worm"
+      symptoms: ["large chunks eaten from leaves", "presence of green caterpillars"]
+      prevention: ["hand pick caterpillars", "attract parasitic wasps", "use Bt spray"]
+
+harvest:
+  indicators:
+    - "Firm fruit with full color development"
+    - "Fruit separates easily from vine"
+    - "Slightly soft when gently pressed"
+  days_after_flowering: [45, 85]
+  notes: "Cherry tomatoes ripen faster than larger varieties. Pick when fully colored for best flavor."

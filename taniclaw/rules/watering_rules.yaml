@@ -1,0 +1,53 @@
+version: 1
+description: "Expanded plant-type-specific watering rules"
+
+rules:
+  # Spinach and lettuce need more frequent watering
+  - id: watering_spinach_daily
+    name: "Water spinach/lettuce daily"
+    priority: 11
+    conditions:
+      - field: plant_type
+        operator: in
+        value: ["spinach", "lettuce"]
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+      - field: today_rainfall_mm
+        operator: lt
+        value: 5
+    action:
+      type: water
+      description: "Siram bayam/selada setiap hari — tanaman daun membutuhkan kelembaban konsisten."
+      amount_ml: 200
+
+  # Hydroponic reservoir check
+  - id: hydroponic_check
+    name: "Check hydroponic system daily"
+    priority: 11
+    conditions:
+      - field: plant_type
+        operator: eq
+        value: hydroponic
+      - field: days_since_last_water
+        operator: gte
+        value: 1
+    action:
+      type: water
+      description: "Periksa sistem hidroponik: level air, EC nutrisi, dan nilai pH. Isi ulang jika diperlukan."
+      amount_ml: 500
+
+  # High humidity — reduce watering
+  - id: reduce_watering_humidity
+    name: "Reduce watering in high humidity"
+    priority: 30
+    conditions:
+      - field: humidity
+        operator: gte
+        value: 90
+      - field: today_rainfall_mm
+        operator: lt
+        value: 5
+    action:
+      type: log
+      description: "Kelembaban sangat tinggi (≥90%). Pertimbangkan untuk mengurangi frekuensi penyiraman hari ini untuk mencegah penyakit jamur."

@@ -1,0 +1,42 @@
+watering_patterns:
+  general_principles:
+    - "Water in the morning (6-9 AM) to allow leaves to dry during the day"
+    - "Water at soil level, not on leaves, to prevent fungal disease"
+    - "Deep, infrequent watering encourages deep root growth"
+    - "Check soil moisture by sticking finger 2 cm into soil — water if dry"
+    - "Use mulch to retain moisture and reduce watering frequency by 30-50%"
+
+  by_growing_method:
+    soil:
+      principle: "Allow top 2-3 cm of soil to dry between watering"
+      technique: "Water slowly at base of plant until runoff"
+      frequency: "Every 1-3 days depending on weather and plant stage"
+    pot:
+      principle: "Pots dry out faster than ground — check daily"
+      technique: "Water until water flows from drainage holes"
+      frequency: "Every 1-2 days in hot weather"
+    hydroponic:
+      principle: "Continuous nutrient delivery — check reservoir daily"
+      technique: "Maintain water level, check EC and pH"
+      frequency: "Top up daily, full change every 7-14 days"
+
+  weather_adjustments:
+    hot_dry: "Increase frequency and amount by 50%"
+    cloudy_cool: "Reduce frequency by 30%"
+    rainy: "Skip watering entirely if rainfall > 10mm"
+    windy: "Increase amount — wind increases evapotranspiration"
+    humid: "Reduce frequency — high humidity slows evaporation"
+
+  signs_of_overwatering:
+    - "Yellowing lower leaves"
+    - "Mushy stem base"
+    - "Fungus gnats in soil"
+    - "Root rot smell"
+    - "Wilting despite wet soil"
+
+  signs_of_underwatering:
+    - "Wilting in morning (not heat of day)"
+    - "Dry, crispy leaf edges"
+    - "Soil pulling away from pot edges"
+    - "Very light pot weight"
+    - "Slow growth despite good light/nutrients"

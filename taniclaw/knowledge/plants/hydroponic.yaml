@@ -1,0 +1,95 @@
+plant_type: hydroponic
+display_name: Tanaman Hidroponik / Hydroponic Plants
+family: Various
+
+lifecycle:
+  stages:
+    - name: seed
+      duration_days: [3, 7]
+      description: "Seeds in rockwool/coco coir propagation medium"
+      instructions:
+        - "Place seeds in pre-soaked rockwool cubes"
+        - "Keep propagation medium moist (not soaking wet)"
+        - "Maintain temperature 22-26°C"
+        - "Cover with humidity dome or plastic wrap"
+        - "Check EC/pH of water every day (target pH 5.5-6.5)"
+    - name: germination
+      duration_days: [3, 7]
+      description: "Seedlings emerging, ready for nutrient solution"
+      instructions:
+        - "Remove humidity dome"
+        - "Begin with half-strength nutrient solution (EC 0.8-1.0)"
+        - "Ensure roots reach water in DWC systems"
+        - "Maintain pH 5.5-6.5 in reservoir"
+        - "Provide 14-16 hours of light"
+    - name: vegetative
+      duration_days: [14, 28]
+      description: "Rapid growth in nutrient-rich water"
+      instructions:
+        - "Increase nutrient solution strength to EC 1.5-2.0"
+        - "Check and adjust pH daily (target 5.8-6.2)"
+        - "Monitor water level and top up as needed"
+        - "Ensure good oxygenation (air pump in DWC)"
+        - "Maintain 16 hours light / 8 hours dark cycle"
+        - "Temperature: 18-24°C"
+    - name: harvest
+      duration_days: [7, 21]
+      description: "Continuous harvest of fast-growing hydroponic greens"
+      instructions:
+        - "Harvest outer leaves for continuous production"
+        - "Flush with clean water 1-2 days before harvest"
+        - "Harvest in early morning for best quality"
+        - "Deep-clean system between growing cycles"
+
+watering:
+  default_frequency_days: 0
+  note: "Hydroponic systems run 24/7 - this refers to nutrient solution management"
+  adjust_by_stage:
+    seed: { frequency_days: 1, amount_ml: 100, note: "Propagation medium moisture" }
+    germination: { frequency_days: 1, amount_ml: 200, note: "Begin diluted nutrients" }
+    vegetative: { frequency_days: 1, amount_ml: 500, note: "Full nutrient solution cycling" }
+    harvest: { frequency_days: 1, amount_ml: 500, note: "Continue nutrient cycling" }
+  weather_adjustments:
+    high_temp_threshold: 30
+    high_temp_action: "increase cooling and monitor dissolved oxygen"
+    low_humidity_threshold: 40
+    low_humidity_action: "increase reservoir water and mist surroundings"
+
+fertilizer:
+  schedule:
+    - stage: germination
+      type: "Hydroponics nutrients A+B (half strength)"
+      frequency_days: 7
+      amount_grams: 3
+      note: "Mix A and B separately before combining"
+    - stage: vegetative
+      type: "Hydroponics nutrients A+B (full strength)"
+      frequency_days: 7
+      amount_grams: 5
+    - stage: harvest
+      type: "Hydroponics nutrients A+B (light)"
+      frequency_days: 7
+      amount_grams: 3
+
+diseases:
+  common:
+    - name: "Root Rot (Pythium)"
+      symptoms: ["brown slimy roots", "wilting despite water", "foul smell from reservoir"]
+      prevention: ["maintain good aeration", "keep reservoir cool (<22°C)", "use beneficial bacteria", "clean system between cycles"]
+    - name: "Nutrient Deficiency"
+      symptoms: ["yellowing leaves", "purple stems", "slow growth"]
+      prevention: ["check and adjust EC regularly", "ensure correct pH for nutrient uptake", "use complete nutrient formula"]
+    - name: "Algae Growth"
+      symptoms: ["green slime in reservoir", "on growing medium", "in pipes"]
+      prevention: ["block all light from nutrient solution", "use dark opaque containers", "clean system regularly"]
+    - name: "Fungus Gnats"
+      symptoms: ["small flies around growing medium", "larvae in substrate"]
+      prevention: ["use coco coir or rockwool instead of soil", "yellow sticky traps", "allow top to dry between watering"]
+
+harvest:
+  indicators:
+    - "Leaves are full-sized and vibrant green"
+    - "For lettuce: heads are compact and full"
+    - "For herbs: before flowering begins"
+  days_after_flowering: [0, 0]
+  notes: "Hydroponics grows 2-3x faster than soil. Monitor EC (1.5-2.5 mS/cm) and pH (5.8-6.2) daily. Change nutrient solution every 1-2 weeks."

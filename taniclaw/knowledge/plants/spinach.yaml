@@ -1,0 +1,85 @@
+plant_type: spinach
+display_name: Bayam / Spinach
+family: Amaranthaceae
+
+lifecycle:
+  stages:
+    - name: seed
+      duration_days: [3, 7]
+      description: "Seeds planted directly in growing medium"
+      instructions:
+        - "Broadcast seeds evenly or plant in rows 5 cm apart"
+        - "Cover with thin 0.5 cm layer of soil"
+        - "Keep soil moist during germination"
+        - "Ideal temperature: 15-20°C (spinach prefers cool weather)"
+    - name: germination
+      duration_days: [5, 10]
+      description: "Seedlings emerging rapidly"
+      instructions:
+        - "Keep soil consistently moist"
+        - "Provide 4-6 hours of sunlight"
+        - "Thin seedlings to 5-7 cm apart"
+        - "Protect from extreme heat"
+    - name: vegetative
+      duration_days: [20, 35]
+      description: "Leaves developing rapidly, main growth stage"
+      instructions:
+        - "Water regularly — spinach needs consistent moisture"
+        - "Apply light nitrogen fertilizer every 10 days"
+        - "Pick outer leaves to encourage continued growth"
+        - "Protect from direct afternoon sun in hot weather"
+        - "Watch for bolting (flowering) in heat"
+    - name: harvest
+      duration_days: [14, 30]
+      description: "Leaves ready for continuous harvest"
+      instructions:
+        - "Harvest outer leaves first, leaving center to grow"
+        - "Harvest entire plant if bolting begins"
+        - "Pick in the morning for best freshness"
+        - "Replant new seeds every 2-3 weeks for continuous supply"
+
+watering:
+  default_frequency_days: 1
+  adjust_by_stage:
+    seed: { frequency_days: 1, amount_ml: 100 }
+    germination: { frequency_days: 1, amount_ml: 150 }
+    vegetative: { frequency_days: 1, amount_ml: 200 }
+    harvest: { frequency_days: 1, amount_ml: 200 }
+  weather_adjustments:
+    rain_mm_threshold: 5
+    rain_action: "skip watering"
+    high_temp_threshold: 30
+    high_temp_action: "water twice daily and provide shade"
+    low_humidity_threshold: 50
+    low_humidity_action: "increase frequency to twice daily"
+
+fertilizer:
+  schedule:
+    - stage: vegetative
+      type: "Urea (nitrogen)"
+      frequency_days: 10
+      amount_grams: 3
+    - stage: harvest
+      type: "NPK 15-5-5"
+      frequency_days: 14
+      amount_grams: 3
+
+diseases:
+  common:
+    - name: "Downy Mildew"
+      symptoms: ["yellow spots on upper leaves", "grey-purple mold on underside"]
+      prevention: ["avoid overhead watering", "ensure good air circulation", "plant in well-drained soil"]
+    - name: "Leaf Miners"
+      symptoms: ["white winding trails on leaves", "blotchy discoloration"]
+      prevention: ["remove affected leaves", "use yellow sticky traps", "neem oil spray"]
+    - name: "Aphids"
+      symptoms: ["sticky residue on leaves", "small green or black insects", "curled leaves"]
+      prevention: ["spray with water jet", "introduce ladybugs", "neem oil spray"]
+
+harvest:
+  indicators:
+    - "Leaves are 10-15 cm long and dark green"
+    - "Plant has at least 5-6 mature leaves"
+    - "Harvest before flowering stalk appears"
+  days_after_flowering: [0, 7]
+  notes: "Spinach is fast-growing. Plant in succession every 2-3 weeks. Best grown in cool season (wet season in tropics)."

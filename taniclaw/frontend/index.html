@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaniClaw — Dashboard Pertanian Cerdas</title>
+    <meta name="description"
+        content="TaniClaw v1 — Lightweight Autonomous Agriculture Skill. Pantau dan kelola tanaman Anda dengan kecerdasan buatan." />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">🌱</div>
+                <div>
+                    <h1>TaniClaw</h1>
+                    <span>Agriculture Skill v1</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Navigasi</div>
+                <a class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                    <span class="nav-icon">🏠</span> Dashboard
+                </a>
+                <a class="nav-item" data-page="plants" id="nav-plants">
+                    <span class="nav-icon">🌿</span> Tanaman Saya
+                </a>
+                <a class="nav-item" data-page="history" id="nav-history">
+                    <span class="nav-icon">📋</span> Riwayat
+                </a>
+                <div class="nav-section-label" style="margin-top:8px;">Alat</div>
+                <a class="nav-item" href="/chat" target="_blank">
+                    <span class="nav-icon">💬</span> Chat Asisten
+                </a>
+                <a class="nav-item" href="/docs" target="_blank">
+                    <span class="nav-icon">📖</span> API Docs
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                TaniClaw v1.0.0 • Rules-first AI<br />
+                Open-Meteo Weather • Groq LLM
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <span class="topbar-title" id="page-title">📊 Dashboard</span>
+                <div class="topbar-actions">
+                    <button class="btn btn-sm btn-secondary" id="btn-refresh" title="Refresh data">
+                        🔄 Refresh
+                    </button>
+                    <button class="btn btn-sm btn-primary" onclick="openAddPlantModal()">
+                        + Tambah Tanaman
+                    </button>
+                </div>
+            </header>
+
+            <!-- ── Page: Dashboard ── -->
+            <section class="page active" id="page-dashboard">
+                <!-- Alert Banner -->
+                <div id="alerts-container"></div>
+
+                <!-- Stats -->
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon green">🌿</div>
+                        <div>
+                            <div class="stat-value" id="stat-active">–</div>
+                            <div class="stat-label">Tanaman Aktif</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber">📋</div>
+                        <div>
+                            <div class="stat-value" id="stat-actions">–</div>
+                            <div class="stat-label">Tindakan Hari Ini</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">🌤️</div>
+                        <div>
+                            <div class="stat-value" id="stat-temp">–°C</div>
+                            <div class="stat-label">Suhu Maks Hari Ini</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">⚠️</div>
+                        <div>
+                            <div class="stat-value" id="stat-alerts">–</div>
+                            <div class="stat-label">Peringatan</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Instructions -->
+                <div class="card" style="margin-bottom:20px;">
+                    <div class="card-header">
+                        <span class="card-title">📌 Instruksi Hari Ini</span>
+                        <button class="btn btn-sm btn-secondary" id="btn-run-cycle">▶️ Jalankan Siklus</button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="instruction-list" id="today-instructions">
+                            <li>
+                                <div class="empty-state-icon">⏳</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Plants overview -->
+                <div class="section-header">
+                    <span class="section-title">Tanaman Aktif</span>
+                    <button class="btn btn-sm btn-primary" onclick="openAddPlantModal()">+ Tambah</button>
+                </div>
+                <div class="plants-grid" id="plants-grid">
+                    <!-- Plant cards injected by JS -->
+                </div>
+            </section>
+
+            <!-- ── Page: Plants ── -->
+            <section class="page" id="page-plants">
+                <div class="section-header">
+                    <span class="section-title">🌿 Semua Tanaman</span>
+                    <div style="display:flex;gap:8px">
+                        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--slate-600);">
+                            <input type="checkbox" id="show-all-plants" /> Tampilkan non-aktif
+                        </label>
+                        <button class="btn btn-sm btn-primary" onclick="openAddPlantModal()">+ Tambah Tanaman</button>
+                    </div>
+                </div>
+                <div class="plants-grid" id="plants-grid-full"></div>
+            </section>
+
+            <!-- ── Page: History ── -->
+            <section class="page" id="page-history">
+                <div class="section-header">
+                    <span class="section-title">📋 Riwayat Pertanian</span>
+                    <button class="btn btn-sm btn-secondary" onclick="loadHistory()">🔄 Refresh</button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="timeline" id="history-timeline">
+                            <div class="empty-state">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Plant Detail Panel -->
+    <div class="detail-panel" id="detail-panel">
+        <div class="detail-panel-header">
+            <button class="btn btn-icon btn-secondary" onclick="closeDetail()">✕</button>
+            <div>
+                <div style="font-size:17px;font-weight:700;" id="detail-name">–</div>
+                <div style="font-size:12px;color:var(--slate-500);" id="detail-type">–</div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+                <button class="btn btn-sm btn-secondary" id="btn-trigger-plant">▶️ Jalankan</button>
+                <button class="btn btn-sm btn-danger" id="btn-deactivate-plant">Nonaktifkan</button>
+            </div>
+        </div>
+        <div class="detail-panel-body" id="detail-body">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+
+    <!-- Add Plant Modal -->
+    <div class="modal-backdrop" id="add-plant-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">🌱 Tambah Tanaman Baru</span>
+                <button class="btn btn-icon btn-secondary" onclick="closeAddPlantModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-plant-form">
+                    <div class="form-group">
+                        <label class="form-label">Nama Tanaman *</label>
+                        <input type="text" class="form-input" id="input-name" placeholder="Mis: Cabai Merahku"
+                            required />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Jenis Tanaman *</label>
+                            <select class="form-select" id="input-type" required>
+                                <option value="">Pilih jenis...</option>
+                                <option value="chili">🌶️ Cabai</option>
+                                <option value="tomato">🍅 Tomat</option>
+                                <option value="spinach">🥬 Bayam</option>
+                                <option value="lettuce">🥗 Selada</option>
+                                <option value="hydroponic">💧 Hidroponik</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Tanam *</label>
+                            <input type="date" class="form-input" id="input-date" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lokasi *</label>
+                        <input type="text" class="form-input" id="input-location"
+                            placeholder="Mis: Jakarta Selatan, Indonesia" required />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Latitude *</label>
+                            <input type="number" step="0.0001" class="form-input" id="input-lat" placeholder="-6.2088"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Longitude *</label>
+                            <input type="number" step="0.0001" class="form-input" id="input-lon" placeholder="106.8456"
+                                required />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="detectLocation()"
+                        style="margin-bottom:12px;">
+                        📍 Deteksi Lokasi Otomatis
+                    </button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Metode Tanam</label>
+                            <select class="form-select" id="input-method">
+                                <option value="soil">Tanah</option>
+                                <option value="pot">Pot</option>
+                                <option value="hydroponic">Hidroponik</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Kondisi Tanah</label>
+                            <select class="form-select" id="input-soil">
+                                <option value="loamy">Subur (Loam)</option>
+                                <option value="sandy">Berpasir</option>
+                                <option value="clay">Liat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Catatan</label>
+                        <textarea class="form-textarea" id="input-notes" placeholder="Catatan tambahan..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddPlantModal()">Batal</button>
+                <button class="btn btn-primary" id="btn-submit-plant" onclick="submitPlant()">
+                    🌱 Tambah Tanaman
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toast-container"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
